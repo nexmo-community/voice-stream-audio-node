@@ -1,0 +1,13 @@
+[
+    {
+        "action": "talk",
+        "text": "<speak>Please hold to listen to some music<break time='1s' /></speak>",
+        "voiceName": "Russell"
+    },
+    {
+        "action": "stream",
+        "streamUrl": [
+            "http://mplapp.ngrok.io/audio/silence.mp3"
+        ]
+    }
+]
