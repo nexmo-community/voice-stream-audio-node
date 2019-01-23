@@ -12,4 +12,4 @@ To run this application:
 6. Run `npm server.js` in the root directory to start the app.
 7. Make a `GET` request to `http://localhost:3000/call` to call the configured `TO_NUMBER`.
 
-If all goes well, you should hear a message followed by silence. A few seconds later you will hear some music for 30 seconds which then stops.
+If all goes well, you should hear a welcome message. A few seconds later you will hear some music playing for 20 seconds and then the call terminates.

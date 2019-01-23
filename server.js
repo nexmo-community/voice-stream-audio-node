@@ -76,14 +76,17 @@ app.post('/webhooks/events', (req, res) => {
 
     const call_uuid = req.body.uuid
 
-    // Play audio into call after 8 secs
+    // Play audio into call
+    start_stream(call_uuid)
+
+    // Disconnect the call after 20 secs
     setTimeout(() => {
-      start_stream(call_uuid)
-      // Stop audio after 30 secs
-      setTimeout(() => {
-        stop_stream(call_uuid)
-      }, 30000)
-    }, 8000)
+      stop_stream(call_uuid)
+      nexmo.calls.update(call_uuid, { action: 'hangup' }, (req, res) => {
+        console.log("Disconnecting...")
+      });
+    }, 20000)
+
 
   }
   res.status(200).end()
