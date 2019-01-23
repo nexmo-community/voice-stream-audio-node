@@ -1,6 +1,9 @@
 Work-in-progress application for forthcoming tutorial.
 
-To get this working:
+## Instructions for reviewers ##
+
+To run this application:
+
 1. Create a new voice app and link an existing number to it, or purchase a new one. Make a note of the application id.
 2. Download the private key to your application directory.
 3. Copy `example.env` to `.env` and configure your API key, secret, private key file path, to/from numbers and Ngrok URL.
