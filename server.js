@@ -1,12 +1,15 @@
 require('dotenv').config({ path: '.env' })
-
 const path = require('path')
 const express = require('express')
 const app = express()
-
 const bodyParser = require('body-parser')
+const Nexmo = require('nexmo')
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
+
+// Serve contents of public folder in the /audio path
+app.use('/audio', express.static(path.join(__dirname, 'public')))
 
 const TO_NUMBER = process.env.TO_NUMBER
 const NEXMO_NUMBER = process.env.NEXMO_NUMBER
@@ -17,8 +20,6 @@ const NEXMO_API_SECRET = process.env.NEXMO_API_SECRET
 const NEXMO_APPLICATION_ID = process.env.NEXMO_APPLICATION_ID
 const NEXMO_APPLICATION_PRIVATE_KEY_PATH = process.env.NEXMO_APPLICATION_PRIVATE_KEY_PATH
 
-const Nexmo = require('nexmo')
-
 const nexmo = new Nexmo({
   apiKey: NEXMO_API_KEY,
   apiSecret: NEXMO_API_SECRET,
@@ -26,7 +27,6 @@ const nexmo = new Nexmo({
   privateKey: NEXMO_APPLICATION_PRIVATE_KEY_PATH
 })
 
-app.use('/audio', express.static(path.join(__dirname, 'public')))
 const answer_url = BASE_URL + '/audio/answer.json'
 const audio_url = BASE_URL + '/audio/music.mp3'
 
@@ -92,4 +92,5 @@ app.post('/webhooks/events', (req, res) => {
   res.status(200).end()
 })
 
+// Serve app on port 3000
 app.listen(3000)
