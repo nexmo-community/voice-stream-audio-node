@@ -8,9 +8,6 @@ const Nexmo = require('nexmo')
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-// Serve contents of public folder in the /audio path
-app.use('/audio', express.static(path.join(__dirname, 'public')))
-
 const TO_NUMBER = process.env.TO_NUMBER
 const NEXMO_NUMBER = process.env.NEXMO_NUMBER
 const BASE_URL = process.env.BASE_URL
@@ -27,8 +24,12 @@ const nexmo = new Nexmo({
   privateKey: NEXMO_APPLICATION_PRIVATE_KEY_PATH
 })
 
+// Serve contents of public folder in the /audio path
+app.use('/audio', express.static(path.join(__dirname, 'public')))
+
 const answer_url = BASE_URL + '/audio/answer.json'
 const audio_url = BASE_URL + '/audio/music.mp3'
+const event_url = BASE_URL + `/webhooks/events`
 
 const makeOutboundCall = (req, res) => {
   console.log('Making the outbound call...')
@@ -42,7 +43,8 @@ const makeOutboundCall = (req, res) => {
       type: 'phone',
       number: NEXMO_NUMBER
     },
-    answer_url: [answer_url]
+    answer_url: [answer_url],
+    event_url: event_url
   })
 }
 
