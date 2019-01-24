@@ -1,6 +1,7 @@
-Work-in-progress application for forthcoming tutorial.
+This is the sample code for the "Streaming Audio into a Call with Node.js" blog post.
 
-To get this working:
+## Running the application
+
 1. Create a new voice app and link an existing number to it, or purchase a new one. Make a note of the application id.
 2. Download the private key to your application directory.
 3. Run `ngrok http 3000` to start tunneling.
