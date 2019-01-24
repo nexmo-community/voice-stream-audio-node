@@ -1,10 +1,10 @@
 require('dotenv').config({ path: '.env' })
-
 const path = require('path')
 const express = require('express')
 const app = express()
-
 const bodyParser = require('body-parser')
+const Nexmo = require('nexmo')
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -17,8 +17,6 @@ const NEXMO_API_SECRET = process.env.NEXMO_API_SECRET
 const NEXMO_APPLICATION_ID = process.env.NEXMO_APPLICATION_ID
 const NEXMO_APPLICATION_PRIVATE_KEY_PATH = process.env.NEXMO_APPLICATION_PRIVATE_KEY_PATH
 
-const Nexmo = require('nexmo')
-
 const nexmo = new Nexmo({
   apiKey: NEXMO_API_KEY,
   apiSecret: NEXMO_API_SECRET,
@@ -26,9 +24,12 @@ const nexmo = new Nexmo({
   privateKey: NEXMO_APPLICATION_PRIVATE_KEY_PATH
 })
 
+// Serve contents of public folder in the /audio path
 app.use('/audio', express.static(path.join(__dirname, 'public')))
+
 const answer_url = BASE_URL + '/audio/answer.json'
 const audio_url = BASE_URL + '/audio/music.mp3'
+const event_url = BASE_URL + `/webhooks/events`
 
 const makeOutboundCall = (req, res) => {
   console.log('Making the outbound call...')
@@ -42,7 +43,8 @@ const makeOutboundCall = (req, res) => {
       type: 'phone',
       number: NEXMO_NUMBER
     },
-    answer_url: [answer_url]
+    answer_url: [answer_url],
+    event_url: event_url
   })
 }
 
@@ -76,17 +78,21 @@ app.post('/webhooks/events', (req, res) => {
 
     const call_uuid = req.body.uuid
 
-    // Play audio into call after 8 secs
+    // Play audio into call
+    start_stream(call_uuid)
+
+    // Disconnect the call after 20 secs
     setTimeout(() => {
-      start_stream(call_uuid)
-      // Stop audio after 30 secs
-      setTimeout(() => {
-        stop_stream(call_uuid)
-      }, 30000)
-    }, 8000)
+      stop_stream(call_uuid)
+      nexmo.calls.update(call_uuid, { action: 'hangup' }, (req, res) => {
+        console.log("Disconnecting...")
+      });
+    }, 20000)
+
 
   }
   res.status(200).end()
 })
 
+// Serve app on port 3000
 app.listen(3000)
