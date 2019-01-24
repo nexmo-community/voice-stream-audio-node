@@ -7,7 +7,7 @@
     {
         "action": "stream",
         "streamUrl": [
-            "http://mplapp.ngrok.io/audio/silence.mp3"
+            "http://demo.ngrok.io/audio/silence.mp3"
         ]
     }
 ]
