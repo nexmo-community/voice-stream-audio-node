@@ -8,7 +8,7 @@ This is the sample code for the "Streaming Audio into a Call with Node.js" blog 
 4. Change the hostname of the `silence.mp3` URL in `/public/answer.json` to match your `ngrok` hostname.
 5. Copy `example.env` to `.env` and configure your API key, secret, private key file path, to/from numbers and `ngrok` URL.
 6. Run `npm install` to install dependencies.
-7. Run `npm server.js` in the root directory to start the app.
+7. Run `node server.js` in the root directory to start the app.
 8. Make a `GET` request to `http://localhost:3000/call` to call the configured `TO_NUMBER`.
 
 If all goes well, you should hear a message followed by silence. A few seconds later you will hear some music for 30 seconds which then stops.

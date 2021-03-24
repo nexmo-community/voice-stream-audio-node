@@ -44,7 +44,7 @@ const makeOutboundCall = (req, res) => {
       number: NEXMO_NUMBER
     },
     answer_url: [answer_url],
-    event_url: event_url
+    event_url: [event_url]
   })
 }
 
