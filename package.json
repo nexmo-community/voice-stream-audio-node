@@ -7,11 +7,12 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Mark Lewin",
+  "contributor": "Amanda Cavallaro",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.3",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
-    "nexmo": "^2.4.0"
+    "@vonage/server-sdk": "^2.10.10"
   }
 }
