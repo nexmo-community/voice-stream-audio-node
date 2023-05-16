@@ -1,12 +1,8 @@
 require('dotenv').config({ path: '.env' })
-const path = require('path')
 const express = require('express')
 const app = express()
-const bodyParser = require('body-parser')
+const path = require('path')
 const Vonage = require('@vonage/server-sdk')
-
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
 
 const TO_NUMBER = process.env.TO_NUMBER
 const VONAGE_NUMBER = process.env.VONAGE_NUMBER
@@ -24,12 +20,15 @@ const vonage = new Vonage({
   privateKey: VONAGE_APPLICATION_PRIVATE_KEY_PATH
 })
 
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+
 // Serve contents of public folder in the /audio path
 app.use('/audio', express.static(path.join(__dirname, 'public')))
 
 const answer_url = BASE_URL + '/audio/answer.json'
 const audio_url = BASE_URL + '/audio/music.mp3'
-const event_url = BASE_URL + `/webhooks/events`
+const event_url = BASE_URL + '/webhooks/events'
 
 const makeOutboundCall = (req, res) => {
   console.log('Making the outbound call...')
