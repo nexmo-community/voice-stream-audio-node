@@ -10,7 +10,7 @@
   "contributor": "Amanda Cavallaro",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.18.3",
+    "body-parser": "^2.0.0",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
     "@vonage/server-sdk": "^2.10.10"
